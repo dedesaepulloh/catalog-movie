@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Catalog Movie</string>
+    <string name="list_genre">List Of Official Genres For Movies</string>
 </resources>
