@@ -5,8 +5,10 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.dedesaepulloh.catalogmovie.data.source.local.LocalDataSource
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.RemoteDataSource
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.ResultsItem
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import com.dedesaepulloh.catalogmovie.utils.AppExecutors
 import com.dedesaepulloh.catalogmovie.vo.Resource
@@ -54,6 +56,49 @@ class CatalogRepository @Inject constructor(
                         genreList.add(genre)
                     }
                     localDataSource.insertGenre(genreList)
+                }
+            }
+
+        }.asLiveData()
+    }
+
+    override fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<MovieEntity>, List<ResultsItem>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(5)
+                    .setPageSize(5)
+                    .build()
+                return LivePagedListBuilder(
+                    localDataSource.getAllMovie(),
+                    config
+                ).build()
+            }
+
+            override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean =
+                data == null || data.isEmpty()
+
+            public override fun createCall(): LiveData<ApiResponse<List<ResultsItem>>> =
+                remoteDataSource.getMovie()
+
+            public override fun saveCallResult(data: List<ResultsItem>) {
+                val movieList = ArrayList<MovieEntity>()
+                for (response in data) {
+                    val movie = MovieEntity(
+                        response.id,
+                        response.originalTitle,
+                        response.overview,
+                        response.popularity,
+                        response.posterPath,
+                        response.releaseDate,
+                        response.voteAverage,
+                        response.voteCount,
+                        response.backdropPath
+                    )
+                    movieList.add(movie)
+                    localDataSource.insertMovie(movieList)
                 }
             }
 
