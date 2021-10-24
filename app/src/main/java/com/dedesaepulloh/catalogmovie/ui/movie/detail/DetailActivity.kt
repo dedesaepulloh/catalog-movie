@@ -4,7 +4,11 @@ package com.dedesaepulloh.catalogmovie.ui.movie.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -12,11 +16,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.dedesaepulloh.catalogmovie.BaseApplication
 import com.dedesaepulloh.catalogmovie.R
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import com.dedesaepulloh.catalogmovie.databinding.ActivityDetailBinding
 import com.dedesaepulloh.catalogmovie.utils.Helper
 import com.dedesaepulloh.catalogmovie.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
 import javax.inject.Inject
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -29,6 +36,7 @@ class DetailActivity : AppCompatActivity() {
         factory
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
@@ -39,19 +47,48 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.detail_movie)
 
         showLoading(true)
+
         val movie = intent?.getIntExtra(Helper.EXTRA_ID, 1)
         if (movie != null) {
             detailViewModel.getMoviesById(movie).observe(this, {
                 movieLoadData(it)
                 showLoading(false)
             })
+            detailViewModel.getTrailer(movie).observe(this, { trailer ->
+                activityDetailBinding.itemDetail.apply {
+                    mainWebview.webViewClient = WebViewClient()
+                    mainWebview.webChromeClient = WebChromeClient()
+                    mainWebview.settings.javaScriptCanOpenWindowsAutomatically = true
+                    mainWebview.settings.javaScriptEnabled = true
+                    mainWebview.settings.pluginState = WebSettings.PluginState.ON
+                    mainWebview.settings.defaultFontSize = 18
+                    ytTrailer(trailer);
+                    Log.i("Isi bodi", trailer.toString())
+                }
+            })
         }
+
+    }
+
+    private fun ytTrailer(data: ApiResponse<List<TrailerResults>>) {
+        val kodeHTML = "<head></head><body>" +
+                "<iframe width=\"400\" height=\"260\" src=\"https://www.youtube.com/embed/" +
+                data.body[0].key +
+                "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>" +
+                "</body>"
+        activityDetailBinding.itemDetail.mainWebview.loadData(
+            kodeHTML,
+            "text/html; charset=utf-8",
+            null
+        )
+        Log.i("Isi bodi", data.body[0].key)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
     @SuppressLint("SimpleDateFormat")
     private fun movieLoadData(data: MovieEntity?) {
         data?.apply {
@@ -98,7 +135,8 @@ class DetailActivity : AppCompatActivity() {
                 labelOverview.visibility = View.GONE
                 labelVote.visibility = View.GONE
                 tvVote.visibility = View.GONE
-                labelBackdrop.visibility = View.GONE
+                labelTrailer.visibility = View.GONE
+                mainWebview.visibility = View.GONE
             }
 
         } else {
@@ -115,7 +153,8 @@ class DetailActivity : AppCompatActivity() {
                 labelOverview.visibility = View.VISIBLE
                 labelVote.visibility = View.VISIBLE
                 tvVote.visibility = View.VISIBLE
-                labelBackdrop.visibility = View.VISIBLE
+                labelTrailer.visibility = View.VISIBLE
+                mainWebview.visibility = View.VISIBLE
             }
         }
     }

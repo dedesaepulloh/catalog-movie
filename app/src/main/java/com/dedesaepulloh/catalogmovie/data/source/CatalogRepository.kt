@@ -8,7 +8,8 @@ import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.RemoteDataSource
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.ResultsItem
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.ResultsItemMovie
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import com.dedesaepulloh.catalogmovie.utils.AppExecutors
 import com.dedesaepulloh.catalogmovie.vo.Resource
@@ -64,7 +65,7 @@ class CatalogRepository @Inject constructor(
 
     override fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> {
         return object :
-            NetworkBoundResource<PagedList<MovieEntity>, List<ResultsItem>>(appExecutors) {
+            NetworkBoundResource<PagedList<MovieEntity>, List<ResultsItemMovie>>(appExecutors) {
             public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
@@ -80,10 +81,10 @@ class CatalogRepository @Inject constructor(
             override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean =
                 data == null || data.isEmpty()
 
-            public override fun createCall(): LiveData<ApiResponse<List<ResultsItem>>> =
+            public override fun createCall(): LiveData<ApiResponse<List<ResultsItemMovie>>> =
                 remoteDataSource.getMovie()
 
-            public override fun saveCallResult(data: List<ResultsItem>) {
+            public override fun saveCallResult(data: List<ResultsItemMovie>) {
                 val movieList = ArrayList<MovieEntity>()
                 for (response in data) {
                     val movie = MovieEntity(
@@ -106,4 +107,48 @@ class CatalogRepository @Inject constructor(
     }
     override fun getMovieDetail(movieId: Int): LiveData<MovieEntity> =
         localDataSource.getMovieById(movieId)
+
+    override fun getTrailer(movieId: Int): LiveData<ApiResponse<List<TrailerResults>>> = remoteDataSource.getTrailer(movieId)
+
+//    override fun getTrailer(movieId: Int): LiveData<Resource<PagedList<TrailerEntity>>> {
+//        return object :
+//            NetworkBoundResource<PagedList<TrailerEntity>, List<TrailerResults>>(appExecutors) {
+//            public override fun loadFromDB(): LiveData<PagedList<TrailerEntity>> {
+//                val config = PagedList.Config.Builder()
+//                    .setEnablePlaceholders(false)
+//                    .setInitialLoadSizeHint(5)
+//                    .setPageSize(5)
+//                    .build()
+//                return LivePagedListBuilder(
+//                    localDataSource.getTrailer(movieId),
+//                    config
+//                ).build()
+//            }
+//
+//            override fun shouldFetch(data: PagedList<TrailerEntity>?): Boolean =
+//                data == null || data.isEmpty()
+//
+//            public override fun createCall(): LiveData<ApiResponse<List<TrailerResults>>> =
+//                remoteDataSource.getTrailer()
+//
+//            public override fun saveCallResult(data: List<TrailerResults>) {
+//                val movieList = ArrayList<TrailerEntity>()
+//                for (response in data) {
+//                    val movie = TrailerEntity(
+//                        response.id,
+//                        response.movieId,
+//                        response.key,
+//                        response.site,
+//                        response.name,
+//                        response.type,
+//                        response.publishedAt
+//                    )
+//                    movieList.add(movie)
+//                    localDataSource.insertTrailer(movieList)
+//                }
+//            }
+//
+//        }.asLiveData()
+//    }
+
 }

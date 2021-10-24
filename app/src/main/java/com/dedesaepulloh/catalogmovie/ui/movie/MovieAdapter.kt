@@ -32,8 +32,6 @@ class MovieAdapter :
     inner class MovieViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
-
-
             binding.apply {
                 tvVote.text = movie.vote_average.toString()
                 Glide.with(itemView)

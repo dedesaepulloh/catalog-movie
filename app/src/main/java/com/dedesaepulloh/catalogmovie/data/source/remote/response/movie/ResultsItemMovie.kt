@@ -2,7 +2,7 @@ package com.dedesaepulloh.catalogmovie.data.source.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultsItem(
+data class ResultsItemMovie(
 
 	@SerializedName("id")
 	val id: Int,
@@ -15,9 +15,6 @@ data class ResultsItem(
 
 	@SerializedName("original_title")
 	val originalTitle: String,
-
-//	@SerializedName("video")
-//	val video: Boolean,
 
 	@SerializedName("title")
 	val title: String,
@@ -36,10 +33,6 @@ data class ResultsItem(
 
 	@SerializedName("vote_average")
 	val voteAverage: Double,
-
-//
-//	@SerializedName("adult")
-//	val adult: Boolean,
 
 	@SerializedName("vote_count")
 	val voteCount: Double

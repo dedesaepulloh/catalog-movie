@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 
 @Dao
 interface CatalogDao {
@@ -26,5 +27,11 @@ interface CatalogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovie(movie: List<MovieEntity>)
+
+    @Query("SELECT * FROM tbl_trailer WHERE movieId = :movieId")
+    fun getTrailer(movieId: Int): LiveData<TrailerEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTrailer(trailer: List<TrailerEntity>)
 
 }

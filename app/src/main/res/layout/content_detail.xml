@@ -19,13 +19,14 @@
             android:id="@+id/ri_poster"
             android:layout_width="140dp"
             android:layout_height="200dp"
+            android:layout_marginTop="5dp"
             android:contentDescription="@string/detail_movie"
             android:padding="3dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_backdrop"
             app:layout_constraintVertical_bias="0"
             app:riv_corner_radius="10dp"
             tools:src="@drawable/ic_image" />
@@ -179,19 +180,6 @@
             app:layout_constraintTop_toBottomOf="@+id/label_overview"
             tools:text="Lorem ipsum" />
 
-        <TextView
-            android:id="@+id/label_backdrop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="@string/backdrop"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
-
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_backdrop"
             android:layout_width="0dp"
@@ -202,10 +190,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/label_backdrop"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
             app:riv_corner_radius="10dp"
             tools:src="@drawable/ic_image" />
+
+        <TextView
+            android:id="@+id/label_trailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="@string/trailer"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
+
+        <WebView
+            android:id="@+id/main_webview"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:background="@color/gray_900"
+            android:backgroundTint="@color/gray_900"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/label_trailer" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
