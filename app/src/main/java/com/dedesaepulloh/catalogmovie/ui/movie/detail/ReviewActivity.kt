@@ -59,6 +59,11 @@ class ReviewActivity : AppCompatActivity() {
                                 adapter.notifyDataSetChanged()
                                 Log.i("Review Data ", it.toString())
                                 showLoading(false)
+                                if (it.size > 0) {
+                                    isEmptyReview(false)
+                                } else {
+                                    isEmptyReview(true)
+                                }
                             }
                         }
                         Status.ERROR -> {
@@ -91,4 +96,24 @@ class ReviewActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
+    private fun isEmptyReview(state: Boolean) {
+        if (state) {
+            activityReviewBinding.reviewEmpty.apply {
+                imgEmpty.visibility = View.VISIBLE
+                tvEmpty.text = getString(R.string.no_reviews)
+                tvEmpty.visibility = View.VISIBLE
+                parentEmpty.visibility = View.VISIBLE
+            }
+            activityReviewBinding.rvReview.visibility = View.GONE
+        } else {
+            activityReviewBinding.reviewEmpty.apply {
+                imgEmpty.visibility = View.GONE
+                tvEmpty.visibility = View.GONE
+                parentEmpty.visibility = View.GONE
+            }
+            activityReviewBinding.rvReview.visibility = View.VISIBLE
+        }
+    }
+
 }

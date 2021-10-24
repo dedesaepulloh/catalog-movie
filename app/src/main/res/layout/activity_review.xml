@@ -18,6 +18,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/items_review" />
 
+    <include
+        android:id="@+id/review_empty"
+        layout="@layout/empty_item"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyle"
