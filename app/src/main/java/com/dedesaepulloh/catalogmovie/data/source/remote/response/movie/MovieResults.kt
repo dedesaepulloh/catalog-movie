@@ -2,7 +2,7 @@ package com.dedesaepulloh.catalogmovie.data.source.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultsItemMovie(
+data class MovieResults(
 
 	@SerializedName("id")
 	val id: Int,

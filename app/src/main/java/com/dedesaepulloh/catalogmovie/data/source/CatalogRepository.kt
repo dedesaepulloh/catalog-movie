@@ -6,9 +6,11 @@ import androidx.paging.PagedList
 import com.dedesaepulloh.catalogmovie.data.source.local.LocalDataSource
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.RemoteDataSource
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.ResultsItemMovie
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.MovieResults
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.review.ReviewResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import com.dedesaepulloh.catalogmovie.utils.AppExecutors
@@ -65,7 +67,7 @@ class CatalogRepository @Inject constructor(
 
     override fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> {
         return object :
-            NetworkBoundResource<PagedList<MovieEntity>, List<ResultsItemMovie>>(appExecutors) {
+            NetworkBoundResource<PagedList<MovieEntity>, List<MovieResults>>(appExecutors) {
             public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
@@ -81,10 +83,10 @@ class CatalogRepository @Inject constructor(
             override fun shouldFetch(data: PagedList<MovieEntity>?): Boolean =
                 data == null || data.isEmpty()
 
-            public override fun createCall(): LiveData<ApiResponse<List<ResultsItemMovie>>> =
+            public override fun createCall(): LiveData<ApiResponse<List<MovieResults>>> =
                 remoteDataSource.getMovie()
 
-            public override fun saveCallResult(data: List<ResultsItemMovie>) {
+            public override fun saveCallResult(data: List<MovieResults>) {
                 val movieList = ArrayList<MovieEntity>()
                 for (response in data) {
                     val movie = MovieEntity(
@@ -105,50 +107,57 @@ class CatalogRepository @Inject constructor(
 
         }.asLiveData()
     }
+
     override fun getMovieDetail(movieId: Int): LiveData<MovieEntity> =
         localDataSource.getMovieById(movieId)
 
-    override fun getTrailer(movieId: Int): LiveData<ApiResponse<List<TrailerResults>>> = remoteDataSource.getTrailer(movieId)
+    override fun getTrailer(movieId: Int): LiveData<ApiResponse<List<TrailerResults>>> =
+        remoteDataSource.getTrailer(movieId)
 
-//    override fun getTrailer(movieId: Int): LiveData<Resource<PagedList<TrailerEntity>>> {
-//        return object :
-//            NetworkBoundResource<PagedList<TrailerEntity>, List<TrailerResults>>(appExecutors) {
-//            public override fun loadFromDB(): LiveData<PagedList<TrailerEntity>> {
-//                val config = PagedList.Config.Builder()
-//                    .setEnablePlaceholders(false)
-//                    .setInitialLoadSizeHint(5)
-//                    .setPageSize(5)
-//                    .build()
-//                return LivePagedListBuilder(
-//                    localDataSource.getTrailer(movieId),
-//                    config
-//                ).build()
-//            }
-//
-//            override fun shouldFetch(data: PagedList<TrailerEntity>?): Boolean =
-//                data == null || data.isEmpty()
-//
-//            public override fun createCall(): LiveData<ApiResponse<List<TrailerResults>>> =
-//                remoteDataSource.getTrailer()
-//
-//            public override fun saveCallResult(data: List<TrailerResults>) {
-//                val movieList = ArrayList<TrailerEntity>()
-//                for (response in data) {
-//                    val movie = TrailerEntity(
-//                        response.id,
-//                        response.movieId,
-//                        response.key,
-//                        response.site,
-//                        response.name,
-//                        response.type,
-//                        response.publishedAt
-//                    )
-//                    movieList.add(movie)
-//                    localDataSource.insertTrailer(movieList)
-//                }
-//            }
-//
-//        }.asLiveData()
-//    }
+    override fun getReview(movieId: Int): LiveData<Resource<PagedList<ReviewEntity>>> {
+        return object :
+            NetworkBoundResource<PagedList<ReviewEntity>, List<ReviewResults>>(appExecutors) {
+            public override fun loadFromDB(): LiveData<PagedList<ReviewEntity>> {
+                val config = PagedList.Config.Builder()
+                    .setEnablePlaceholders(false)
+                    .setInitialLoadSizeHint(8)
+                    .setPageSize(8)
+                    .build()
+                return LivePagedListBuilder(
+                    localDataSource.getReview(movieId),
+                    config
+                ).build()
+            }
+
+            override fun shouldFetch(data: PagedList<ReviewEntity>?): Boolean =
+                data == null || data.isEmpty()
+
+            public override fun createCall(): LiveData<ApiResponse<List<ReviewResults>>> =
+                remoteDataSource.getReview(movieId)
+
+            public override fun saveCallResult(data: List<ReviewResults>) {
+                val reviewList = ArrayList<ReviewEntity>()
+                for (response in data) {
+                    val review = ReviewEntity(
+                        response.id,
+                        movieId,
+                        response.authorDetails.avatarPath,
+                        response.authorDetails.name,
+                        response.authorDetails.rating,
+                        response.authorDetails.username,
+                        response.updatedAt,
+                        response.author,
+                        response.createdAt,
+                        response.content,
+                        response.url
+                    )
+                    reviewList.add(review)
+                    localDataSource.insertReview(reviewList)
+                }
+            }
+
+        }.asLiveData()
+    }
+
 
 }

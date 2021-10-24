@@ -8,6 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 
 @Dao
@@ -33,5 +34,11 @@ interface CatalogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTrailer(trailer: List<TrailerEntity>)
+
+    @Query("SELECT * FROM tbl_review WHERE movieId = :movieId")
+    fun getReview(movieId: Int): DataSource.Factory<Int,ReviewEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertReview(review: List<ReviewEntity>)
 
 }

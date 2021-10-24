@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dedesaepulloh.catalogmovie.BuildConfig
 import com.dedesaepulloh.catalogmovie.data.source.remote.network.ApiConfig
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.GenreResponse
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.MovieResponse
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.TrailerResponse
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenreResponse
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.ResultsItemMovie
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.MovieResponse
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.MovieResults
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.review.ReviewResponse
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.review.ReviewResults
+import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResponse
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import retrofit2.Call
@@ -41,20 +43,20 @@ class RemoteDataSource @Inject constructor() {
         return result
     }
 
-    fun getMovie(): LiveData<ApiResponse<List<ResultsItemMovie>>> {
-        val result = MutableLiveData<ApiResponse<List<ResultsItemMovie>>>()
+    fun getMovie(): LiveData<ApiResponse<List<MovieResults>>> {
+        val result = MutableLiveData<ApiResponse<List<MovieResults>>>()
         ApiConfig.getApiService().getMovie()
-            .enqueue(object : Callback<MovieResponse<ResultsItemMovie>> {
+            .enqueue(object : Callback<MovieResponse<MovieResults>> {
                 override fun onResponse(
-                    call: Call<MovieResponse<ResultsItemMovie>>,
-                    response: Response<MovieResponse<ResultsItemMovie>>
+                    call: Call<MovieResponse<MovieResults>>,
+                    response: Response<MovieResponse<MovieResults>>
                 ) {
                     if (response.isSuccessful) {
-                        result.postValue(ApiResponse.success(response.body()?.results as List<ResultsItemMovie>))
+                        result.postValue(ApiResponse.success(response.body()?.results as List<MovieResults>))
                     }
                 }
 
-                override fun onFailure(call: Call<MovieResponse<ResultsItemMovie>>, t: Throwable) {
+                override fun onFailure(call: Call<MovieResponse<MovieResults>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
                 }
@@ -72,10 +74,33 @@ class RemoteDataSource @Inject constructor() {
                 ) {
                     if (response.isSuccessful) {
                         result.postValue(ApiResponse.success(response.body()?.results as List<TrailerResults>))
+                        Log.i("Response", response.toString())
                     }
                 }
 
                 override fun onFailure(call: Call<TrailerResponse<TrailerResults>>, t: Throwable) {
+                    Log.e("Failure", "${t.message}")
+                    result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
+                }
+            })
+        return result
+    }
+
+    fun getReview(movieId: Int): LiveData<ApiResponse<List<ReviewResults>>> {
+        val result = MutableLiveData<ApiResponse<List<ReviewResults>>>()
+        ApiConfig.getApiService().getReview(movieId, BuildConfig.API_KEY)
+            .enqueue(object : Callback<ReviewResponse<ReviewResults>> {
+                override fun onResponse(
+                    call: Call<ReviewResponse<ReviewResults>>,
+                    response: Response<ReviewResponse<ReviewResults>>
+                ) {
+                    if (response.isSuccessful) {
+                        result.postValue(ApiResponse.success(response.body()?.results as List<ReviewResults>))
+                        Log.i("Response", response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<ReviewResponse<ReviewResults>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
                 }

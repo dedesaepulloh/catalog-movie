@@ -1,4 +1,4 @@
-package com.dedesaepulloh.catalogmovie.data.source.remote.response
+package com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer
 
 import com.google.gson.annotations.SerializedName
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.room.CatalogDao
 import javax.inject.Inject
@@ -20,4 +21,8 @@ class LocalDataSource @Inject constructor(private val mCatalogDao: CatalogDao) {
 
     fun getTrailer(movieId: Int): LiveData<TrailerEntity> = mCatalogDao.getTrailer(movieId)
     fun insertTrailer(trailer: List<TrailerEntity>) = mCatalogDao.insertTrailer(trailer)
+
+    fun getReview(movieId: Int): DataSource.Factory<Int,ReviewEntity> = mCatalogDao.getReview(movieId)
+    fun insertReview(review: List<ReviewEntity>) = mCatalogDao.insertReview(review)
+
 }

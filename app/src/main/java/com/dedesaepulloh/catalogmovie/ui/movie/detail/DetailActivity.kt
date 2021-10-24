@@ -3,6 +3,7 @@
 package com.dedesaepulloh.catalogmovie.ui.movie.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -46,26 +47,32 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.detail_movie)
 
-        showLoading(true)
-
         val movie = intent?.getIntExtra(Helper.EXTRA_ID, 1)
-        if (movie != null) {
-            detailViewModel.getMoviesById(movie).observe(this, {
-                movieLoadData(it)
-                showLoading(false)
-            })
-            detailViewModel.getTrailer(movie).observe(this, { trailer ->
-                activityDetailBinding.itemDetail.apply {
-                    mainWebview.webViewClient = WebViewClient()
-                    mainWebview.webChromeClient = WebChromeClient()
-                    mainWebview.settings.javaScriptCanOpenWindowsAutomatically = true
-                    mainWebview.settings.javaScriptEnabled = true
-                    mainWebview.settings.pluginState = WebSettings.PluginState.ON
-                    mainWebview.settings.defaultFontSize = 18
-                    ytTrailer(trailer);
-                    Log.i("Isi bodi", trailer.toString())
-                }
-            })
+        when {
+            movie != null -> {
+                detailViewModel.getMoviesById(movie).observe(this, {
+                    movieLoadData(it)
+                    showLoading(false)
+                })
+                detailViewModel.getTrailer(movie).observe(this, { trailer ->
+                    activityDetailBinding.itemDetail.apply {
+                        mainWebview.webViewClient = WebViewClient()
+                        mainWebview.webChromeClient = WebChromeClient()
+                        mainWebview.settings.javaScriptCanOpenWindowsAutomatically = true
+                        mainWebview.settings.javaScriptEnabled = true
+                        mainWebview.settings.pluginState = WebSettings.PluginState.ON
+                        mainWebview.settings.defaultFontSize = 18
+                        ytTrailer(trailer);
+                        Log.i("Isi bodi", trailer.toString())
+                    }
+                })
+            }
+        }
+
+        activityDetailBinding.btnReview.setOnClickListener {
+            val review = Intent(this, ReviewActivity::class.java)
+            review.putExtra(Helper.EXTRA_ID, movie)
+            it.context.startActivity(review)
         }
 
     }
@@ -137,6 +144,8 @@ class DetailActivity : AppCompatActivity() {
                 tvVote.visibility = View.GONE
                 labelTrailer.visibility = View.GONE
                 mainWebview.visibility = View.GONE
+                riPoster.visibility = View.GONE
+                imgBackdrop.visibility = View.GONE
             }
 
         } else {
@@ -155,6 +164,8 @@ class DetailActivity : AppCompatActivity() {
                 tvVote.visibility = View.VISIBLE
                 labelTrailer.visibility = View.VISIBLE
                 mainWebview.visibility = View.VISIBLE
+                riPoster.visibility = View.VISIBLE
+                imgBackdrop.visibility = View.VISIBLE
             }
         }
     }
