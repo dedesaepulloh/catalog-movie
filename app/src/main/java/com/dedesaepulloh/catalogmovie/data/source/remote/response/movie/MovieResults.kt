@@ -7,6 +7,9 @@ data class MovieResults(
 	@SerializedName("id")
 	val id: Int,
 
+	@SerializedName("genre_ids")
+	val genreIds: List<Int>,
+
 	@SerializedName("overview")
 	val overview: String,
 

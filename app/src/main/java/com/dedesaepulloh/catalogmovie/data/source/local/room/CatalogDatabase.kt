@@ -9,7 +9,7 @@ import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 
 @Database(
     entities = [GenreEntity::class, MovieEntity::class, TrailerEntity::class, ReviewEntity::class],
-    version = 7,
+    version = 8,
     exportSchema = false
 )
 abstract class CatalogDatabase : RoomDatabase() {

@@ -65,7 +65,7 @@ class CatalogRepository @Inject constructor(
         }.asLiveData()
     }
 
-    override fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> {
+    override fun getMovie(genreIds: Int): LiveData<Resource<PagedList<MovieEntity>>> {
         return object :
             NetworkBoundResource<PagedList<MovieEntity>, List<MovieResults>>(appExecutors) {
             public override fun loadFromDB(): LiveData<PagedList<MovieEntity>> {
@@ -75,7 +75,7 @@ class CatalogRepository @Inject constructor(
                     .setPageSize(5)
                     .build()
                 return LivePagedListBuilder(
-                    localDataSource.getAllMovie(),
+                    localDataSource.getAllMovie(genreIds),
                     config
                 ).build()
             }
@@ -84,13 +84,14 @@ class CatalogRepository @Inject constructor(
                 data == null || data.isEmpty()
 
             public override fun createCall(): LiveData<ApiResponse<List<MovieResults>>> =
-                remoteDataSource.getMovie()
+                remoteDataSource.getMovie(genreIds)
 
             public override fun saveCallResult(data: List<MovieResults>) {
                 val movieList = ArrayList<MovieEntity>()
                 for (response in data) {
                     val movie = MovieEntity(
                         response.id,
+                        genreIds,
                         response.originalTitle,
                         response.overview,
                         response.popularity,

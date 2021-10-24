@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.dedesaepulloh.catalogmovie.BaseApplication
 import com.dedesaepulloh.catalogmovie.R
 import com.dedesaepulloh.catalogmovie.databinding.ActivityMovieBinding
+import com.dedesaepulloh.catalogmovie.utils.Helper
 import com.dedesaepulloh.catalogmovie.viewmodel.ViewModelFactory
 import com.dedesaepulloh.catalogmovie.vo.Status
 import javax.inject.Inject
@@ -32,30 +33,34 @@ class MovieActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.list_movie)
 
+        val genre = intent?.getIntExtra(Helper.EXTRA_ID, 1)
+
         adapter = MovieAdapter()
         binding?.apply {
             rvMovie.layoutManager = GridLayoutManager(this@MovieActivity, 3)
             rvMovie.setHasFixedSize(true)
             rvMovie.adapter = adapter
         }
-        movieViewModel.getMovie().observe(this, { movie ->
-            if (movie != null) {
-                when (movie.status) {
-                    Status.LOADING -> showLoading(true)
-                    Status.SUCCESS -> {
-                        movie.data?.let {
-                            adapter.submitList(it)
-                            adapter.notifyDataSetChanged()
-                            Log.i("DATA : ", movie.toString())
+        if (genre != null) {
+            movieViewModel.getMovie(genre).observe(this, { movie ->
+                if (movie != null) {
+                    when (movie.status) {
+                        Status.LOADING -> showLoading(true)
+                        Status.SUCCESS -> {
+                            movie.data?.let {
+                                adapter.submitList(it)
+                                adapter.notifyDataSetChanged()
+                                Log.i("DATA : ", movie.toString())
+                                showLoading(false)
+                            }
+                        }
+                        Status.ERROR -> {
                             showLoading(false)
                         }
                     }
-                    Status.ERROR -> {
-                        showLoading(false)
-                    }
                 }
-            }
-        })
+            })
+        }
     }
 
 

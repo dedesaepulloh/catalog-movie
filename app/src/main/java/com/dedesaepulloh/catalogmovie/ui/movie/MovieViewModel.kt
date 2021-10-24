@@ -8,6 +8,6 @@ import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.vo.Resource
 
 class MovieViewModel(private val catalogRepository: CatalogRepository) : ViewModel() {
-    fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>> =
-        catalogRepository.getMovie()
+    fun getMovie(genreIds: Int): LiveData<Resource<PagedList<MovieEntity>>> =
+        catalogRepository.getMovie(genreIds)
 }

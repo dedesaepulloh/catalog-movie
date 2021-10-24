@@ -15,6 +15,9 @@ data class MovieEntity(
     @ColumnInfo(name = "movieId")
     val movieId: Int,
 
+    @ColumnInfo(name = "genre_ids")
+    val genreIds: Int,
+
     @ColumnInfo(name = "original_title")
     val original_title: String? = null,
 
@@ -40,3 +43,4 @@ data class MovieEntity(
     val backdrop_path: String? = null,
 
     ) : Parcelable
+

@@ -15,7 +15,7 @@ class LocalDataSource @Inject constructor(private val mCatalogDao: CatalogDao) {
     fun getAllGenre(): DataSource.Factory<Int, GenreEntity> = mCatalogDao.getGenre()
     fun insertGenre(genre: List<GenreEntity>) = mCatalogDao.insertGenre(genre)
 
-    fun getAllMovie(): DataSource.Factory<Int, MovieEntity> = mCatalogDao.getMovie()
+    fun getAllMovie(genreIds: Int): DataSource.Factory<Int, MovieEntity> = mCatalogDao.getMovie(genreIds)
     fun getMovieById(movieId: Int): LiveData<MovieEntity> = mCatalogDao.getMovieDetail(movieId)
     fun insertMovie(movie: List<MovieEntity>) = mCatalogDao.insertMovie(movie)
 

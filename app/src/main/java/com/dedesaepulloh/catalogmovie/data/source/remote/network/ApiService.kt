@@ -1,6 +1,7 @@
 package com.dedesaepulloh.catalogmovie.data.source.remote.network
 
 import com.dedesaepulloh.catalogmovie.BuildConfig
+import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenreResponse
@@ -18,6 +19,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+    val movieEntity: MovieEntity
     val entity: TrailerEntity
     val reviewEntity: ReviewEntity
 
@@ -29,6 +31,7 @@ interface ApiService {
     @GET("discover/movie")
     fun getMovie(
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("with_genres") genreIds: Int = movieEntity.genreIds
     ): Call<MovieResponse<MovieResults>>
 
     @GET("movie/{movie_id}/videos")

@@ -43,9 +43,9 @@ class RemoteDataSource @Inject constructor() {
         return result
     }
 
-    fun getMovie(): LiveData<ApiResponse<List<MovieResults>>> {
+    fun getMovie(genreIds: Int): LiveData<ApiResponse<List<MovieResults>>> {
         val result = MutableLiveData<ApiResponse<List<MovieResults>>>()
-        ApiConfig.getApiService().getMovie()
+        ApiConfig.getApiService().getMovie(BuildConfig.API_KEY, genreIds)
             .enqueue(object : Callback<MovieResponse<MovieResults>> {
                 override fun onResponse(
                     call: Call<MovieResponse<MovieResults>>,

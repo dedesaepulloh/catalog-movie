@@ -20,8 +20,8 @@ interface CatalogDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGenre(genre: List<GenreEntity>)
 
-    @Query("SELECT * FROM tbl_movie")
-    fun getMovie(): DataSource.Factory<Int, MovieEntity>
+    @Query("SELECT * FROM tbl_movie WHERE genre_ids = :genreIds")
+    fun getMovie(genreIds: Int): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM tbl_movie WHERE movieId = :movieId")
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity>

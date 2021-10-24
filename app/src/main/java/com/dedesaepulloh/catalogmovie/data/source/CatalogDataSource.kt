@@ -11,7 +11,7 @@ import com.dedesaepulloh.catalogmovie.vo.Resource
 
 interface CatalogDataSource {
     fun getGenre(): LiveData<Resource<PagedList<GenreEntity>>>
-    fun getMovie(): LiveData<Resource<PagedList<MovieEntity>>>
+    fun getMovie(genreIds: Int): LiveData<Resource<PagedList<MovieEntity>>>
     fun getMovieDetail(movieId: Int): LiveData<MovieEntity>
     fun getTrailer(movieId: Int): LiveData<ApiResponse<List<TrailerResults>>>
     fun getReview(movieId: Int): LiveData<Resource<PagedList<ReviewEntity>>>
