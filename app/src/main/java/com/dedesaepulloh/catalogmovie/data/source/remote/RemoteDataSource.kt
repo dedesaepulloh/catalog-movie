@@ -3,7 +3,6 @@ package com.dedesaepulloh.catalogmovie.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dedesaepulloh.catalogmovie.BuildConfig
 import com.dedesaepulloh.catalogmovie.data.source.remote.network.ApiConfig
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.GenreResponse
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.MovieResponse

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_900"
     android:padding="6dp"
     tools:context=".ui.genre.GenreActivity">
 
@@ -14,7 +15,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/list_genre"
-        android:textColor="@color/black_transparent"
+        android:textColor="@color/turmeric"
         android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

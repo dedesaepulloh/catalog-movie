@@ -104,5 +104,6 @@ class CatalogRepository @Inject constructor(
 
         }.asLiveData()
     }
-
+    override fun getMovieDetail(movieId: Int): LiveData<MovieEntity> =
+        localDataSource.getMovieById(movieId)
 }

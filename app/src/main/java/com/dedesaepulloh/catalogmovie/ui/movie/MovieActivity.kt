@@ -1,18 +1,14 @@
 package com.dedesaepulloh.catalogmovie.ui.movie
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dedesaepulloh.catalogmovie.BaseApplication
 import com.dedesaepulloh.catalogmovie.R
-import com.dedesaepulloh.catalogmovie.databinding.ActivityGenreBinding
 import com.dedesaepulloh.catalogmovie.databinding.ActivityMovieBinding
-import com.dedesaepulloh.catalogmovie.ui.genre.GenreAdapter
-import com.dedesaepulloh.catalogmovie.ui.genre.GenreViewModel
-import com.dedesaepulloh.catalogmovie.utils.Helper
 import com.dedesaepulloh.catalogmovie.viewmodel.ViewModelFactory
 import com.dedesaepulloh.catalogmovie.vo.Status
 import javax.inject.Inject

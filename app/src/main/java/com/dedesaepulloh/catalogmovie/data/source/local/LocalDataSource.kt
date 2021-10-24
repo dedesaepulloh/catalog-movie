@@ -1,5 +1,6 @@
 package com.dedesaepulloh.catalogmovie.data.source.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
@@ -14,4 +15,6 @@ class LocalDataSource @Inject constructor(private val mCatalogDao: CatalogDao) {
 
     fun getAllMovie(): DataSource.Factory<Int, MovieEntity> = mCatalogDao.getMovie()
     fun insertMovie(movie: List<MovieEntity>) = mCatalogDao.insertMovie(movie)
+
+    fun getMovieById(movieId: Int): LiveData<MovieEntity> = mCatalogDao.getMovieDetail(movieId)
 }

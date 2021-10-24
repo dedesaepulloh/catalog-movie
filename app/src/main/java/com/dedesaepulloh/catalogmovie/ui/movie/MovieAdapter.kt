@@ -8,13 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.dedesaepulloh.catalogmovie.R
-import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
-import com.dedesaepulloh.catalogmovie.databinding.ItemsGenreBinding
 import com.dedesaepulloh.catalogmovie.databinding.ItemsMovieBinding
-import com.dedesaepulloh.catalogmovie.ui.genre.GenreAdapter
+import com.dedesaepulloh.catalogmovie.ui.movie.detail.DetailActivity
 import com.dedesaepulloh.catalogmovie.utils.Helper
+
 
 class MovieAdapter :
     PagedListAdapter<MovieEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
@@ -34,15 +32,21 @@ class MovieAdapter :
     inner class MovieViewHolder(private val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity) {
+
+
             binding.apply {
                 tvVote.text = movie.vote_average.toString()
                 Glide.with(itemView)
                     .load("${Helper.BASE_IMAGE_URL}${movie.poster_path}")
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.ic_image)
+                    .placeholder(com.dedesaepulloh.catalogmovie.R.drawable.ic_image)
                     .into(imgPoster)
             }
-
+            itemView.setOnClickListener {
+                val detail = Intent(itemView.context, DetailActivity::class.java)
+                detail.putExtra(Helper.EXTRA_ID, movie.movieId)
+                itemView.context.startActivity(detail)
+            }
         }
     }
 

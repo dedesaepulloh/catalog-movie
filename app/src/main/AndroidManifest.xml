@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatalogMovie">
         <activity
+            android:name=".ui.movie.detail.DetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.movie.MovieActivity"
             android:exported="true" />
         <activity
