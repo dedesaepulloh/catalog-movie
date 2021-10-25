@@ -1,5 +1,6 @@
 package com.dedesaepulloh.catalogmovie.ui.genre
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -39,6 +40,7 @@ class GenreActivity : AppCompatActivity() {
         loadData()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadData() {
         genreViewModel.getGenres().observe(this, { genre ->
             if (genre != null) {

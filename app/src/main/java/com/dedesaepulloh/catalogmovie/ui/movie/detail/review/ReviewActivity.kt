@@ -1,5 +1,6 @@
-package com.dedesaepulloh.catalogmovie.ui.movie.detail
+package com.dedesaepulloh.catalogmovie.ui.movie.detail.review
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dedesaepulloh.catalogmovie.BaseApplication
 import com.dedesaepulloh.catalogmovie.R
 import com.dedesaepulloh.catalogmovie.databinding.ActivityReviewBinding
+import com.dedesaepulloh.catalogmovie.ui.movie.detail.DetailViewModel
 import com.dedesaepulloh.catalogmovie.utils.Helper
 import com.dedesaepulloh.catalogmovie.viewmodel.ViewModelFactory
 import com.dedesaepulloh.catalogmovie.vo.Status
@@ -26,6 +28,7 @@ class ReviewActivity : AppCompatActivity() {
         factory
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)

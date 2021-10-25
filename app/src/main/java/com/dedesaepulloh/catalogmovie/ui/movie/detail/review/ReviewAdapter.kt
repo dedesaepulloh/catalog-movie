@@ -1,8 +1,9 @@
 @file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
-package com.dedesaepulloh.catalogmovie.ui.movie.detail
+package com.dedesaepulloh.catalogmovie.ui.movie.detail.review
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
@@ -51,6 +52,11 @@ class ReviewAdapter :
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(R.drawable.ic_image)
                     .into(imgUser)
+            }
+            itemView.setOnClickListener {
+                val detail = Intent(itemView.context, WebViewActivity::class.java)
+                detail.putExtra(Helper.EXTRA_URL, review.url)
+                itemView.context.startActivity(detail)
             }
         }
     }

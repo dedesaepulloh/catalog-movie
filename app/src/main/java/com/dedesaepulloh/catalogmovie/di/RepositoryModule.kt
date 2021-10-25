@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.dedesaepulloh.catalogmovie.di
 
 import com.dedesaepulloh.catalogmovie.data.source.CatalogDataSource

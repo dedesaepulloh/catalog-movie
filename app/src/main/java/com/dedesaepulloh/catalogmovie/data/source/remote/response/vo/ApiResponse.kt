@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused", "unused")
+
 package com.dedesaepulloh.catalogmovie.data.source.remote.response.vo
 
 class ApiResponse<T>(val status: StatusResponse, val body: T, val message: String?) {

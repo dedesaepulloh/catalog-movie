@@ -20,6 +20,7 @@ import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
 import com.dedesaepulloh.catalogmovie.databinding.ActivityDetailBinding
+import com.dedesaepulloh.catalogmovie.ui.movie.detail.review.ReviewActivity
 import com.dedesaepulloh.catalogmovie.utils.Helper
 import com.dedesaepulloh.catalogmovie.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
@@ -62,8 +63,8 @@ class DetailActivity : AppCompatActivity() {
                         mainWebview.settings.javaScriptEnabled = true
                         mainWebview.settings.pluginState = WebSettings.PluginState.ON
                         mainWebview.settings.defaultFontSize = 18
-                        ytTrailer(trailer);
-                        Log.i("Isi bodi", trailer.toString())
+                        ytTrailer(trailer)
+                        Log.i("Isi body", trailer.toString())
                     }
                 })
             }

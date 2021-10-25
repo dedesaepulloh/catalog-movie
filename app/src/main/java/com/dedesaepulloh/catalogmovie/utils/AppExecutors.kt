@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.dedesaepulloh.catalogmovie.utils
 
 import android.os.Handler

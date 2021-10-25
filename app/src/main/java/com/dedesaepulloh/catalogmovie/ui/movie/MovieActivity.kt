@@ -1,5 +1,6 @@
 package com.dedesaepulloh.catalogmovie.ui.movie
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +26,7 @@ class MovieActivity : AppCompatActivity() {
 
     private val movieViewModel: MovieViewModel by viewModels { factory }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
