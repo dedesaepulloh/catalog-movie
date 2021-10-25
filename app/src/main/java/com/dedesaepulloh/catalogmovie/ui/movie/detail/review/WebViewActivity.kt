@@ -11,18 +11,18 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import com.dedesaepulloh.catalogmovie.BaseApplication
 import com.dedesaepulloh.catalogmovie.R
-import com.dedesaepulloh.catalogmovie.databinding.ActivityWebViewReviewBinding
+import com.dedesaepulloh.catalogmovie.databinding.ActivityWebViewBinding
 import com.dedesaepulloh.catalogmovie.utils.Helper
 
 class WebViewActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityWebViewReviewBinding
+    private lateinit var binding: ActivityWebViewBinding
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         (application as BaseApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-        binding = ActivityWebViewReviewBinding.inflate(layoutInflater)
+        binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.detail_review)

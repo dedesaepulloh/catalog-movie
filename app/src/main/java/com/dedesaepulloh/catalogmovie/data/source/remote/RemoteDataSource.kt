@@ -14,6 +14,7 @@ import com.dedesaepulloh.catalogmovie.data.source.remote.response.review.ReviewR
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResponse
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.trailer.TrailerResults
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.vo.ApiResponse
+import com.dedesaepulloh.catalogmovie.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +24,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor() {
     fun getGenre(): LiveData<ApiResponse<List<GenresItem>>> {
+        EspressoIdlingResource.increment()
         val result = MutableLiveData<ApiResponse<List<GenresItem>>>()
         ApiConfig.getApiService().getGenre()
             .enqueue(object : Callback<GenreResponse<GenresItem>> {
@@ -38,12 +40,14 @@ class RemoteDataSource @Inject constructor() {
                 override fun onFailure(call: Call<GenreResponse<GenresItem>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
+                    EspressoIdlingResource.decrement()
                 }
             })
         return result
     }
 
     fun getMovie(genreIds: Int): LiveData<ApiResponse<List<MovieResults>>> {
+        EspressoIdlingResource.increment()
         val result = MutableLiveData<ApiResponse<List<MovieResults>>>()
         ApiConfig.getApiService().getMovie(BuildConfig.API_KEY, genreIds)
             .enqueue(object : Callback<MovieResponse<MovieResults>> {
@@ -59,12 +63,14 @@ class RemoteDataSource @Inject constructor() {
                 override fun onFailure(call: Call<MovieResponse<MovieResults>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
+                    EspressoIdlingResource.decrement()
                 }
             })
         return result
     }
 
     fun getTrailer(movieId: Int): LiveData<ApiResponse<List<TrailerResults>>> {
+        EspressoIdlingResource.increment()
         val result = MutableLiveData<ApiResponse<List<TrailerResults>>>()
         ApiConfig.getApiService().getTrailer(movieId, BuildConfig.API_KEY)
             .enqueue(object : Callback<TrailerResponse<TrailerResults>> {
@@ -81,12 +87,14 @@ class RemoteDataSource @Inject constructor() {
                 override fun onFailure(call: Call<TrailerResponse<TrailerResults>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
+                    EspressoIdlingResource.decrement()
                 }
             })
         return result
     }
 
     fun getReview(movieId: Int): LiveData<ApiResponse<List<ReviewResults>>> {
+        EspressoIdlingResource.increment()
         val result = MutableLiveData<ApiResponse<List<ReviewResults>>>()
         ApiConfig.getApiService().getReview(movieId, BuildConfig.API_KEY)
             .enqueue(object : Callback<ReviewResponse<ReviewResults>> {
@@ -103,6 +111,7 @@ class RemoteDataSource @Inject constructor() {
                 override fun onFailure(call: Call<ReviewResponse<ReviewResults>>, t: Throwable) {
                     Log.e("Failure", "${t.message}")
                     result.postValue(ApiResponse.error(t.message.toString(), mutableListOf()))
+                    EspressoIdlingResource.decrement()
                 }
             })
         return result
