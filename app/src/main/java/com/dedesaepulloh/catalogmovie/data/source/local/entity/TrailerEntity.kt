@@ -33,4 +33,4 @@ data class TrailerEntity(
     @ColumnInfo(name = "published_at")
     val publishedAt: String? = null
 
-): Parcelable
+) : Parcelable

@@ -36,7 +36,7 @@ interface CatalogDao {
     fun insertTrailer(trailer: List<TrailerEntity>)
 
     @Query("SELECT * FROM tbl_review WHERE movieId = :movieId")
-    fun getReview(movieId: Int): DataSource.Factory<Int,ReviewEntity>
+    fun getReview(movieId: Int): DataSource.Factory<Int, ReviewEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertReview(review: List<ReviewEntity>)

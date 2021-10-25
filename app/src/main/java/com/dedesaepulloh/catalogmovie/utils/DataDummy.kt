@@ -3,7 +3,6 @@ package com.dedesaepulloh.catalogmovie.utils
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
 import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
-import com.dedesaepulloh.catalogmovie.data.source.local.entity.TrailerEntity
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
 import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.MovieResults
 
@@ -37,22 +36,6 @@ object DataDummy {
             )
         )
         return movies
-    }
-
-    fun generateDummyTrailer(): List<TrailerEntity> {
-        val trailer = ArrayList<TrailerEntity>()
-        trailer.add(
-            TrailerEntity(
-                "5e382d1b4ca676001453826d",
-                438631,
-                "w0HgHet0sxg",
-                "YouTube",
-                "Final Trailer",
-                "Trailer",
-                "2021-10-07 16:00:27 UTC"
-            )
-        )
-        return trailer
     }
 
     fun generateDummyReview(): List<ReviewEntity> {

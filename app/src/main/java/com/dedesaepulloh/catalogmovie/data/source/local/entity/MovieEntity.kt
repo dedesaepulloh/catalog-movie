@@ -40,7 +40,7 @@ data class MovieEntity(
     val vote_count: Double? = null,
 
     @ColumnInfo(name = "backdrop_path")
-    val backdrop_path: String? = null,
+    val backdrop_path: String? = null
 
-    ) : Parcelable
+) : Parcelable
 
