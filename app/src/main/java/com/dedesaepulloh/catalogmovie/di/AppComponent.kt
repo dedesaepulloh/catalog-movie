@@ -1,12 +1,12 @@
 package com.dedesaepulloh.catalogmovie.di
 
 import android.content.Context
-import com.dedesaepulloh.catalogmovie.data.source.CatalogDataSource
-import com.dedesaepulloh.catalogmovie.ui.genre.GenreActivity
-import com.dedesaepulloh.catalogmovie.ui.movie.MovieActivity
-import com.dedesaepulloh.catalogmovie.ui.movie.detail.DetailActivity
-import com.dedesaepulloh.catalogmovie.ui.movie.detail.review.ReviewActivity
-import com.dedesaepulloh.catalogmovie.ui.movie.detail.review.WebViewActivity
+import com.dedesaepulloh.catalogmovie.datasource.CatalogDataSource
+import com.dedesaepulloh.catalogmovie.presentation.genre.activity.GenreActivity
+import com.dedesaepulloh.catalogmovie.presentation.movie.activity.MovieActivity
+import com.dedesaepulloh.catalogmovie.presentation.detail.DetailActivity
+import com.dedesaepulloh.catalogmovie.presentation.review.activity.ReviewActivity
+import com.dedesaepulloh.catalogmovie.presentation.review.activity.WebViewActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton

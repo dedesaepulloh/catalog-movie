@@ -14,20 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatalogMovie">
         <activity
-            android:name=".ui.movie.detail.review.WebViewActivity"
+            android:name=".presentation.review.activity.WebViewActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CatalogMovie.Detail"/>
+        <activity
+            android:name=".presentation.review.activity.ReviewActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.movie.detail.review.ReviewActivity"
+            android:name=".presentation.detail.DetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CatalogMovie.Detail"/>
+        <activity
+            android:name=".presentation.movie.activity.MovieActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.movie.detail.DetailActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.movie.MovieActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.genre.GenreActivity"
-            android:exported="true">
+            android:name=".presentation.genre.activity.GenreActivity"
+            android:exported="true"
+            android:theme="@style/Theme.CatalogMovie.Detail">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

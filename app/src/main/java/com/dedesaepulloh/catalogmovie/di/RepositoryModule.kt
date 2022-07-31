@@ -2,8 +2,8 @@
 
 package com.dedesaepulloh.catalogmovie.di
 
-import com.dedesaepulloh.catalogmovie.data.source.CatalogDataSource
-import com.dedesaepulloh.catalogmovie.data.source.CatalogRepository
+import com.dedesaepulloh.catalogmovie.datasource.CatalogDataSource
+import com.dedesaepulloh.catalogmovie.repository.CatalogRepository
 import dagger.Binds
 import dagger.Module
 

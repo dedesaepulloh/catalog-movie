@@ -10,7 +10,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.dedesaepulloh.catalogmovie.ui.genre.GenreActivity
+import com.dedesaepulloh.catalogmovie.presentation.genre.activity.GenreActivity
 import com.dedesaepulloh.catalogmovie.utils.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before

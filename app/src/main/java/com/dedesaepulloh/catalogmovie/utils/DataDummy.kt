@@ -1,10 +1,10 @@
 package com.dedesaepulloh.catalogmovie.utils
 
-import com.dedesaepulloh.catalogmovie.data.source.local.entity.GenreEntity
-import com.dedesaepulloh.catalogmovie.data.source.local.entity.MovieEntity
-import com.dedesaepulloh.catalogmovie.data.source.local.entity.ReviewEntity
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.genre.GenresItem
-import com.dedesaepulloh.catalogmovie.data.source.remote.response.movie.MovieResults
+import com.dedesaepulloh.catalogmovie.datasource.local.entity.GenreEntity
+import com.dedesaepulloh.catalogmovie.datasource.local.entity.MovieEntity
+import com.dedesaepulloh.catalogmovie.datasource.local.entity.ReviewEntity
+import com.dedesaepulloh.catalogmovie.datasource.remote.response.genre.GenresItem
+import com.dedesaepulloh.catalogmovie.datasource.remote.response.movie.MovieResults
 
 object DataDummy {
 
